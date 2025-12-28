@@ -1,6 +1,6 @@
 {% extends 'hospital/patient_base.html' %}
 {% block content %}
-{%load static%}
+{% load static %}
 
 <head>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -26,14 +26,11 @@ written By : sumit kumar
 facebook : fb.com/sumit.luv
 -->
 
-
 <div class="container">
-
-    <form  action="/searchdoctor" method="get" style="margin-left:70%;" class="form-inline my-2 my-lg-0">
+    <form action="/searchdoctor" method="get" style="margin-left:70%;" class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" name="query" id="query" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
- 
 
   {% if doctors %}
   <div class="panel panel-primary">
@@ -43,20 +40,24 @@ facebook : fb.com/sumit.luv
     <table class="table table-hover" id="dev-table">
         <thead>
           <tr>
-  
             <th>Name</th>
             <th>Profile Picture</th>
             <th>Mobile</th>
             <th>Address</th>
             <th>Department</th>
-           
           </tr>
         </thead>
         {% for d in doctors %}
         <tr>
-  
           <td> {{d.get_name}}</td>
-          <td> <img src="{% static d.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+          <!-- 关键修改：移除static + 空值判断 + 默认头像 -->
+          <td>
+            {% if d.profile_pic %}
+              <img src="{{ d.profile_pic.url }}" alt="Profile Pic" height="40px" width="40px" />
+            {% else %}
+              <img src="https://via.placeholder.com/40" alt="Default Profile Pic" height="40px" width="40px" />
+            {% endif %}
+          </td>
           <td>{{d.mobile}}</td>
           <td>{{d.address}}</td>
           <td>{{d.department}}</td>
@@ -64,12 +65,10 @@ facebook : fb.com/sumit.luv
         {% endfor %}
       </table>
   </div>
-  {%else%}
+  {% else %}
   <br><br><br>
   <h4 style="text-align: center;color: red;">No Doctor Found !!!</h4>
   {% endif %}
-
-
 </div>
 <!--
 developed By : sumit kumar

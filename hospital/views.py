@@ -109,22 +109,27 @@ def is_patient(user):
     return user.groups.filter(name='PATIENT').exists()
 
 
+
 #---------AFTER ENTERING CREDENTIALS WE CHECK WHETHER USERNAME AND PASSWORD IS OF ADMIN,DOCTOR OR PATIENT
 def afterlogin_view(request):
     if is_admin(request.user):
         return redirect('admin-dashboard')
     elif is_doctor(request.user):
-        accountapproval=models.Doctor.objects.all().filter(user_id=request.user.id,status=True)
+        # 优化：用exists()判断是否通过审核（更高效，避免空QuerySet问题）
+        accountapproval = models.Doctor.objects.filter(user_id=request.user.id, status=True).exists()
         if accountapproval:
             return redirect('doctor-dashboard')
         else:
             return render(request,'hospital/doctor_wait_for_approval.html')
     elif is_patient(request.user):
-        accountapproval=models.Patient.objects.all().filter(user_id=request.user.id,status=True)
+        # 优化：用exists()判断是否通过审核
+        accountapproval = models.Patient.objects.filter(user_id=request.user.id, status=True).exists()
         if accountapproval:
             return redirect('patient-dashboard')
         else:
             return render(request,'hospital/patient_wait_for_approval.html')
+    # 兜底：所有角色判断都未命中时，返回首页（防止返回None）
+    return render(request, 'hospital/index.html', {'error': '未识别的用户角色，请联系管理员'})
 
 
 

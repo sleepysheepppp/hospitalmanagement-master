@@ -276,7 +276,8 @@
   <nav class="menu" tabindex="0">
     <div class="smartphone-menu-trigger"></div>
     <header class="avatar">
-      <img src="{% static patient.profile_pic.url %}" alt="Profile Pic" />
+      <!-- 修复后：判断头像是否存在，无则显示默认占位图 -->
+      <img src="{% if patient.profile_pic %}{{ patient.profile_pic.url }}{% else %}https://via.placeholder.com/80{% endif %}" alt="Profile Pic" />
       <br><br>
       <h6>Patient</h6>
       <h2>{{request.user.first_name}}</h2>
