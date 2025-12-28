@@ -49,12 +49,40 @@ pip install xhtml2pdf
 ```
 py manage.py makemigrations
 py manage.py migrate
+py populate_db.py(插入数据)
 py manage.py runserver
 ```
 - Now enter following URL in Your Browser Installed On Your Pc
 ```
 http://127.0.0.1:8000/
 ```
+一、管理员账号
+用户名（username）	密码（password）	角色	登录后页面
+hospital_admin	Admin@123456	系统管理员	admin-dashboard
+二、医生账号（共 6 个）
+用户名（username）	密码（password）	科室	审核状态	登录后页面
+dr_heart	Doctor@123	Cardiologist（心脏病科）	已通过	doctor-dashboard
+dr_skin	Doctor@123	Dermatologists（皮肤科）	已通过	doctor-dashboard
+dr_emergency	Doctor@123	Emergency Medicine Specialists（急诊科）	已通过	doctor-dashboard
+dr_allergy	Doctor@123	Allergists/Immunologists（过敏 / 免疫科）	待审核	-（无权限登录）
+dr_anesthesia	Doctor@123	Anesthesiologists（麻醉科）	待审核	-（无权限登录）
+dr_colon	Doctor@123	Colon and Rectal Surgeons（结直肠外科）	待审核	-（无权限登录）
+三、患者账号（共 5 个）
+用户名（username）	密码（password）	症状	审核状态	登录后页面
+pat_001	Patient@123	Chest Pain（胸痛）	待审核	-（无权限登录）
+pat_002	Patient@123	Skin Rash（皮疹）	已通过	patient-dashboard
+pat_003	Patient@123	Severe Pain（剧痛）	已通过	patient-dashboard
+pat_004	Patient@123	Allergy Reaction（过敏反应）	已通过	patient-dashboard
+pat_005	Patient@123	Stomach Ache（胃痛）	已通过	patient-dashboard
+总结
+所有已通过审核的医生密码统一为 Doctor@123，已通过审核的患者密码统一为 Patient@123；
+管理员密码为独立配置：Admin@123456；
+「待审核」状态的医生 / 患者账号无法登录对应仪表盘（无权限），仅可登录已通过审核的账号测试。
+如果需要测试核心功能，优先使用：
+管理员：hospital_admin / Admin@123456
+医生：dr_heart / Doctor@123
+患者：pat_002 / Patient@123
+
 
 ## CHANGES REQUIRED FOR CONTACT US PAGE
 - In settins.py file, You have to give your email and password
