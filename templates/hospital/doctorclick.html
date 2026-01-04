@@ -6,19 +6,149 @@ youtube : youtube.com/lazycoders
 -->
 
 {% block content %}
+<style media="screen">
+  /* 全局细节优化 */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-<br>
-<br>
+  body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
 
-<div class="jumbotron" style="margin-bottom:0px;">
-  <h1 class="display-4" style="text-align:center;">Hello, Doctor</h1>
-  <p class="lead">Welcome to Hospital Management System.</p>
-  <hr class="my-4">
-  <p>You can access various features after Login/SignUp.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="/doctorsignup" role="button">Apply</a>
-    <a class="btn btn-primary btn-lg" href="/doctorlogin" role="button">Login</a>
-  </p>
+  /* 医生欢迎区域美化：替代原有单调jumbotron */
+  .doctor-welcome-section {
+    background: linear-gradient(135deg, #3498db, #2980b9); /* 清新蓝渐变，贴合医疗场景 */
+    padding: 80px 20px;
+    margin: 30px auto;
+    max-width: 1000px;
+    border-radius: 20px; /* 大圆角，更柔和 */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); /* 柔和阴影，提升立体感 */
+    text-align: center;
+    color: #ffffff;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* 新增微光背景效果，提升高级感（不影响核心内容） */
+  .doctor-welcome-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    animation: lightSweep 8s infinite linear;
+  }
+
+  @keyframes lightSweep {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  /* 标题样式优化 */
+  .welcome-title {
+    font-size: clamp(2rem, 5vw, 3rem); /* 响应式字体，适配大屏小屏 */
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 引导文本样式优化 */
+  .welcome-lead {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 分割线样式优化 */
+  .welcome-hr {
+    width: 100px;
+    height: 3px;
+    background-color: #ffffff;
+    opacity: 0.8;
+    margin: 0 auto 30px;
+    border: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 说明文本样式优化 */
+  .welcome-desc {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 按钮组样式优化 */
+  .welcome-btn-group {
+    display: flex;
+    gap: 20px; /* 按钮间距，更整洁 */
+    justify-content: center;
+    flex-wrap: wrap; /* 小屏自动换行 */
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 按钮样式优化 */
+  .welcome-btn {
+    padding: 12px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px; /* 圆形按钮，更美观 */
+    background-color: #ffffff;
+    color: #2980b9;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .welcome-btn:hover {
+    background-color: #f0f8ff;
+    color: #1f618d;
+    transform: translateY(-3px) scale(1.02); /* 上移+轻微放大，交互更友好 */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+  }
+
+  /* 响应式适配，小屏优化 */
+  @media (max-width: 576px) {
+    .doctor-welcome-section {
+      padding: 60px 15px;
+      margin: 20px auto;
+      border-radius: 15px;
+    }
+
+    .welcome-btn {
+      padding: 10px 28px;
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<!-- 移除生硬的<br>标签，用CSS控制间距 -->
+<div class="doctor-welcome-section">
+  <h1 class="welcome-title">Hello, Doctor</h1>
+  <p class="welcome-lead">Welcome to Hospital Management System.</p>
+  <hr class="welcome-hr">
+  <p class="welcome-desc">You can access various features after Login/SignUp.</p>
+  <div class="welcome-btn-group">
+    <a class="welcome-btn" href="/doctorsignup" role="button">Apply</a>
+    <a class="welcome-btn" href="/doctorlogin" role="button">Login</a>
+  </div>
 </div>
 
 {% endblock content %}

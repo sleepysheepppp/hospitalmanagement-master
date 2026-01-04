@@ -6,19 +6,124 @@ youtube : youtube.com/lazycoders
 -->
 
 {% block content %}
+<head>
+  <style media="screen">
+    /* 全局样式优化，提升整体质感 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<br>
-<br>
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f5f7fa; /* 柔和浅灰背景，更清爽 */
+    }
 
-<div class="jumbotron" style="margin-bottom:0px;">
-  <h1 class="display-4" style="text-align:center;">Hello, Patient</h1>
-  <p class="lead">Welcome to Hospital Management System.</p>
-  <hr class="my-4">
-  <p>You can access various features after Login/SignUp.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="/patientsignup" role="button">Register Your Account</a>
-    <a class="btn btn-primary btn-lg" href="/patientlogin" role="button">Login</a>
-  </p>
+    /* 患者欢迎区域样式（替代原有jumbotron，更现代） */
+    .patient-welcome-section {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb); /* 淡蓝渐变背景，贴合医疗场景 */
+      padding: 80px 20px;
+      margin: 40px auto;
+      max-width: 1000px; /* 限制宽度，避免大屏拉伸 */
+      border-radius: 16px; /* 圆角设计，更柔和 */
+      box-shadow: 0 8px 24px rgba(0, 123, 255, 0.15); /* 轻微阴影，提升层次感 */
+      text-align: center; /* 内容居中 */
+    }
+
+    /* 标题样式优化 */
+    .welcome-title {
+      font-size: 2.8rem;
+      color: #004777; /* 深蓝主色调，显专业 */
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: 1px; /* 字间距，更美观 */
+    }
+
+    /* 引导文本样式 */
+    .welcome-lead {
+      font-size: 1.2rem;
+      color: #263238; /* 深灰文字，提升可读性 */
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+
+    /* 分割线样式 */
+    .welcome-hr {
+      width: 80px; /* 缩短长度，更精致 */
+      height: 3px;
+      background-color: #007bff; /* 主色调分割线 */
+      margin: 0 auto 30px; /* 居中对齐 */
+      border: none; /* 去除默认边框 */
+    }
+
+    /* 提示文本样式 */
+    .welcome-tip {
+      font-size: 1.1rem;
+      color: #546e7a; /* 浅灰文字，不刺眼 */
+      margin-bottom: 40px;
+      line-height: 1.6; /* 行高，提升可读性 */
+    }
+
+    /* 按钮容器，让按钮间距更合理 */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px; /* 按钮之间的间距 */
+      flex-wrap: wrap; /* 小屏自动换行 */
+    }
+
+    /* 按钮样式优化，更现代 */
+    .patient-btn {
+      padding: 12px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 8px; /* 圆角按钮 */
+      border: none;
+      transition: all 0.3s ease; /* 过渡动画，hover更丝滑 */
+      text-decoration: none; /* 去除链接下划线 */
+    }
+
+    /* 注册按钮样式 */
+    .btn-register {
+      background-color: #007bff; /* 主色调 */
+      color: #ffffff;
+    }
+
+    .btn-register:hover {
+      background-color: #0056b3; /* 深色hover效果 */
+      color: #ffffff;
+      transform: translateY(-2px); /* 轻微上移，提升交互感 */
+      box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2); /* hover阴影 */
+      text-decoration: none;
+    }
+
+    /* 登录按钮样式 */
+    .btn-login {
+      background-color: #28a745; /* 绿色，区分注册按钮 */
+      color: #ffffff;
+    }
+
+    .btn-login:hover {
+      background-color: #1e7e34; /* 深色hover效果 */
+      color: #ffffff;
+      transform: translateY(-2px); /* 轻微上移，提升交互感 */
+      box-shadow: 0 6px 12px rgba(40, 167, 69, 0.2); /* hover阴影 */
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<!-- 保留原有功能结构，仅替换样式类名 -->
+<div class="patient-welcome-section">
+  <h1 class="welcome-title">Hello, Patient</h1>
+  <p class="welcome-lead">Welcome to Hospital Management System.</p>
+  <hr class="welcome-hr">
+  <p class="welcome-tip">You can access various features after Login/SignUp.</p>
+  <div class="btn-container">
+    <a class="patient-btn btn-register" href="/patientsignup" role="button">Register Your Account</a>
+    <a class="patient-btn btn-login" href="/patientlogin" role="button">Login</a>
+  </div>
 </div>
 
 {% endblock content %}

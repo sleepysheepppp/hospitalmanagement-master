@@ -1,80 +1,158 @@
 {% extends 'hospital/homebase.html' %}
 {% load static %}
-<!--
-written By : sumit kumar
-facebook : fb.com/sumit.luv
--->
-
 
 {% block content %}
 
-
 <head>
   <style media="screen">
-    .jumbotron {
-      margin-top: 0px;
-      margin-bottom: 0px;
-      background-image: url('{% static "images/bg.jpg" %}');
-      background-size: cover;
-      background-repeat: no-repeat;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .jumbotron h5,
-    h3 {
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    /* 头部区域：优化渐变质感，增强层次感 */
+    .hero-section {
+      margin-top: 0;
+      margin-bottom: 0;
+      /* 更柔和的蓝紫渐变，贴合医疗场景，增加渐变层次感 */
+      background: linear-gradient(135deg, #5a67d8, #38b2ac);
+      padding: 140px 20px;
+      border-radius: 0 0 30px 30px; /* 增大圆角，更柔和 */
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); /* 加深阴影，提升立体感 */
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-
-    .alert {
-      margin: 0px;
+    /* 新增背景微光效果，提升高级感（不影响核心内容） */
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      animation: lightSweep 8s infinite linear;
     }
 
+    @keyframes lightSweep {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
 
-
+    /* 发光标题优化：增强动画层次感，更柔和不刺眼 */
     .glow {
-      font-size: 50px;
-      color: white;
-      text-align: center;
-      -webkit-animation: glow 1s ease-in-out infinite alternate;
-      -moz-animation: glow 1s ease-in-out infinite alternate;
-      animation: glow 1s ease-in-out infinite alternate;
+      font-size: clamp(2.5rem, 6vw, 4rem); /* 响应式字体，适配大屏小屏 */
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 30px;
+      -webkit-animation: glow 1.5s ease-in-out infinite alternate;
+      -moz-animation: glow 1.5s ease-in-out infinite alternate;
+      animation: glow 1.5s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 1; /* 保证标题在微光之上 */
     }
 
     @-webkit-keyframes glow {
       from {
-        text-shadow: 0 0 10px #eeeeee, 0 0 20px #000000, 0 0 30px #000000, 0 0 40px #000000, 0 0 50px #9554b3, 0 0 60px #9554b3, 0 0 70px #9554b3;
+        text-shadow: 0 0 15px #fff, 0 0 30px #9ef0f0, 0 0 45px #9ef0f0;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 40px #63e6e6, 0 0 60px #63e6e6;
+      }
+    }
+
+    /* 紧急提示文字：优化排版，增强可读性 */
+    .emergency-title {
+      color: #ffffff;
+      font-size: clamp(1.5rem, 3vw, 2rem); /* 响应式字体 */
+      font-weight: 500;
+      margin-bottom: 40px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); /* 加深文字阴影，提升辨识度 */
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 预约按钮样式：优化配色和交互，更醒目友好 */
+    .btn-appointment {
+      width: clamp(180px, 20vw, 220px); /* 响应式宽度 */
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      /* 按钮文字配色优化，与背景呼应更协调 */
+      color: #2c7a7b;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* 优化阴影质感 */
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 更丝滑的过渡曲线 */
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-appointment:hover {
+      background-color: #f0fdfa; /* 淡绿背景，贴合医疗调性 */
+      transform: translateY(-3px) scale(1.02); /* 轻微放大+上移，增强交互感 */
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* 加深hover阴影 */
+      color: #2c7a7b;
+      text-decoration: none;
+    }
+
+    /* 按钮:active 状态，增加点击反馈 */
+    .btn-appointment:active {
+      transform: translateY(-1px) scale(0.98);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 卡片区域布局：优化间距和适配，更透气 */
+    .card-container {
+      margin: 80px auto;
+      padding: 0 20px;
+      max-width: 1200px;
+      /* 新增卡片区域顶部间距适配，避免与头部拥挤 */
+      padding-top: 20px;
+    }
+
+    /* 响应式优化：小屏设备适配 */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 100px 15px;
+        border-radius: 0 0 20px 20px;
       }
 
-      to {
-        text-shadow: 0 0 20px #eeeeee, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+      .btn-appointment {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+
+      .card-container {
+        margin: 60px auto;
       }
     }
   </style>
 </head>
-<br>
-<br>
 
-<div class="jumbotron" style="margin-bottom: 0px;margin-top: 0px;">
-  <br>
-  <h5 class="display-3 glow">You’ll Love the Way We Care for You</h5>
-  <br><br><br><br><br>
-  <p>
-  <h3>Emergency ?</h3>
-
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="/patientclick" role="button">Take Appointment</a>
-  </p>
-  <br><br>
+<div class="hero-section">
+  <h5 class="glow">You’ll Love the Way We Care for You</h5>
+  <h3 class="emergency-title">Emergency ?</h3>
+  <a class="btn-appointment" href="/patientclick" role="button">Take Appointment</a>
 </div>
 
-<br><br><br><br>
-
-{% include "hospital/admin_doctor_patient_card.html" %}
-<br><br><br>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
+<div class="card-container">
+  {% include "hospital/admin_doctor_patient_card.html" %}
+</div>
 
 {% endblock content %}
