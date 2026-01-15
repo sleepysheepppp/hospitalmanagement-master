@@ -1,6 +1,6 @@
 {% extends 'hospital/admin_base.html' %}
 {% block content %}
-{%load static%}
+{% load static %}  <!-- 确保static标签加载（保留原有） -->
 
 <head>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -18,12 +18,15 @@
     .row {
       margin: 100px;
     }
+    /* 新增：默认头像样式统一 */
+    .profile-img {
+      height: 40px;
+      width: 40px;
+      object-fit: cover; /* 保持图片比例 */
+    }
   </style>
 </head>
-<!--
-written By : sumit kumar
-facebook : fb.com/sumit.luv
--->
+
 <div class="container">
   <div class="panel panel-primary">
     <div class="panel-heading">
@@ -44,23 +47,30 @@ facebook : fb.com/sumit.luv
       {% for p in patients %}
       <tr>
         <td> {{p.get_name}}</td>
-        <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+        <!-- 核心修改：添加头像判空逻辑 -->
+        <td>
+          {% if p.profile_pic and p.profile_pic.url %}
+            <!-- 有上传头像时显示用户头像 -->
+            <img src="{{ p.profile_pic.url }}" alt="Profile Pic" class="profile-img" />
+          {% else %}
+            <!-- 无头像时显示默认头像（需提前准备默认图片） -->
+            <img src="{% static 'images/default_avatar.png' %}" alt="Default Profile Pic" class="profile-img" />
+          {% endif %}
+        </td>
         <td>{{p.symptoms}}</td>
         <td>{{p.mobile}}</td>
         <td>{{p.address}}</td>
         <td><a class="btn btn-primary btn-xs" href="{% url 'approve-patient' p.id  %}"><span class="glyphicon glyphicon-ok"></span></a></td>
         <td><a class="btn btn-danger btn-xs" href="{% url 'reject-patient' p.id  %}"><span class="glyphicon glyphicon-trash"></span></a></td>
       </tr>
+      {% empty %}
+        <!-- 新增：无待审核患者时的提示 -->
+        <tr>
+          <td colspan="7" style="text-align: center;">No patients waiting for admission approval.</td>
+        </tr>
       {% endfor %}
     </table>
   </div>
-
-
 </div>
-<!--
-developed By : sumit kumar
-facebook : fb.com/sumit.luv
-youtube : youtube.com/lazycoders
--->
 
 {% endblock content %}
